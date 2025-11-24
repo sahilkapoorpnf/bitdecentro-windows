@@ -2,35 +2,65 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "@/components/ui/avatar";
 import { Mail, Phone, Calendar, TrendingUp, MessageSquare } from "lucide-react";
+import { AdminLayout } from "@/components/AdminLayout";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+
+const customerGrowthData = [
+  { month: "Jan", customers: 845 },
+  { month: "Feb", customers: 923 },
+  { month: "Mar", customers: 1024 },
+  { month: "Apr", customers: 1105 },
+  { month: "May", customers: 1189 },
+  { month: "Jun", customers: 1247 },
+];
 
 export const Slide14 = () => {
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-bold text-foreground mb-2">Customer CRM</h3>
-        <p className="text-muted-foreground">Manage customer relationships and boost retention</p>
-      </div>
+    <AdminLayout title="Customer CRM">
+      <div className="space-y-6">{/* Stats Cards */}
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-8">
-        <Card className="p-4">
-          <p className="text-2xl font-bold text-foreground">1,247</p>
-          <p className="text-sm text-muted-foreground mt-1">Total Customers</p>
-        </Card>
-        <Card className="p-4 bg-primary/5 border-primary/30">
-          <p className="text-2xl font-bold text-primary">342</p>
-          <p className="text-sm text-muted-foreground mt-1">Active This Month</p>
-        </Card>
-        <Card className="p-4">
-          <p className="text-2xl font-bold text-foreground">89</p>
-          <p className="text-sm text-muted-foreground mt-1">New Leads</p>
-        </Card>
-        <Card className="p-4">
-          <p className="text-2xl font-bold text-foreground">67%</p>
-          <p className="text-sm text-muted-foreground mt-1">Repeat Rate</p>
-        </Card>
-      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <Card className="p-4">
+            <p className="text-2xl font-bold text-foreground">1,247</p>
+            <p className="text-sm text-muted-foreground mt-1">Total Customers</p>
+          </Card>
+          <Card className="p-4 bg-primary/5 border-primary/30">
+            <p className="text-2xl font-bold text-primary">342</p>
+            <p className="text-sm text-muted-foreground mt-1">Active This Month</p>
+          </Card>
+          <Card className="p-4">
+            <p className="text-2xl font-bold text-foreground">89</p>
+            <p className="text-sm text-muted-foreground mt-1">New Leads</p>
+          </Card>
+          <Card className="p-4">
+            <p className="text-2xl font-bold text-foreground">67%</p>
+            <p className="text-sm text-muted-foreground mt-1">Repeat Rate</p>
+          </Card>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        {/* Customer Growth Chart */}
+        <Card className="p-6">
+          <h4 className="font-semibold text-foreground mb-4">Customer Growth Trend</h4>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={customerGrowthData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+              <YAxis stroke="hsl(var(--muted-foreground))" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: "hsl(var(--card))", 
+                  border: "1px solid hsl(var(--border))",
+                  borderRadius: "8px"
+                }} 
+              />
+              <Legend />
+              <Line type="monotone" dataKey="customers" stroke="hsl(var(--primary))" strokeWidth={2} name="Total Customers" />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+
+        {/* Customer Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {[
           { name: "Maria Garcia", phone: "+52 55 1234 5678", email: "maria@email.com", jobs: 3, spent: "$42,300", lastJob: "2 weeks ago" },
           { name: "Diego Hernandez", phone: "+52 55 8765 4321", email: "diego@email.com", jobs: 1, spent: "$14,200", lastJob: "1 month ago" },
@@ -75,12 +105,13 @@ export const Slide14 = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="p-6">
-          <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            Lead History
-          </h4>
+        {/* Lead and Quotation History */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="p-6">
+            <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              Lead History
+            </h4>
           <div className="space-y-3">
             {[
               { name: "Isabella Lopez", source: "Google Ads", date: "Today", status: "new" },
@@ -121,29 +152,31 @@ export const Slide14 = () => {
             ))}
           </div>
         </Card>
-      </div>
-
-      <Card className="p-6 mt-6 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/30">
-        <h4 className="font-semibold text-foreground mb-3">Automated Reminders</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p className="text-muted-foreground">Follow-up on pending quotes after 3 days</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p className="text-muted-foreground">Maintenance reminders after 6 months</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p className="text-muted-foreground">Birthday wishes with special discount</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p className="text-muted-foreground">Warranty expiry notifications</p>
-          </div>
         </div>
-      </Card>
-    </div>
+
+        {/* Automated Reminders */}
+        <Card className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/30">
+          <h4 className="font-semibold text-foreground mb-3">Automated Reminders</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
+              <p className="text-muted-foreground">Follow-up on pending quotes after 3 days</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
+              <p className="text-muted-foreground">Maintenance reminders after 6 months</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
+              <p className="text-muted-foreground">Birthday wishes with special discount</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
+              <p className="text-muted-foreground">Warranty expiry notifications</p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </AdminLayout>
   );
 };
