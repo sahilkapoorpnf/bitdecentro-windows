@@ -1,35 +1,63 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, MapPin, User } from "lucide-react";
+import { AdminLayout } from "@/components/AdminLayout";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
+
+const orderStatusData = [
+  { name: "Pending", value: 18, color: "hsl(var(--primary))" },
+  { name: "In Progress", value: 23, color: "hsl(var(--accent))" },
+  { name: "Completed", value: 86, color: "hsl(142, 71%, 45%)" },
+];
 
 export const Slide12 = () => {
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-bold text-foreground mb-2">Order Management</h3>
-        <p className="text-muted-foreground">Handle bookings and assign installers efficiently</p>
-      </div>
+    <AdminLayout title="Order Management">
+      <div className="space-y-6">{/* Stats Cards */}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="p-4 border-primary/30 bg-primary/5">
-          <div className="text-center">
-            <p className="text-3xl font-bold text-foreground">18</p>
-            <p className="text-sm text-muted-foreground mt-1">Pending Orders</p>
-          </div>
-        </Card>
-        <Card className="p-4">
-          <div className="text-center">
-            <p className="text-3xl font-bold text-foreground">23</p>
-            <p className="text-sm text-muted-foreground mt-1">In Progress</p>
-          </div>
-        </Card>
-        <Card className="p-4">
-          <div className="text-center">
-            <p className="text-3xl font-bold text-primary">86</p>
-            <p className="text-sm text-muted-foreground mt-1">Completed Today</p>
-          </div>
-        </Card>
-      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <Card className="p-4 border-primary/30 bg-primary/5">
+            <div className="text-center">
+              <p className="text-3xl font-bold text-foreground">18</p>
+              <p className="text-sm text-muted-foreground mt-1">Pending Orders</p>
+            </div>
+          </Card>
+          <Card className="p-4">
+            <div className="text-center">
+              <p className="text-3xl font-bold text-foreground">23</p>
+              <p className="text-sm text-muted-foreground mt-1">In Progress</p>
+            </div>
+          </Card>
+          <Card className="p-4">
+            <div className="text-center">
+              <p className="text-3xl font-bold text-primary">86</p>
+              <p className="text-sm text-muted-foreground mt-1">Completed Today</p>
+            </div>
+          </Card>
+          <Card className="p-4">
+            <h4 className="font-semibold text-foreground mb-3 text-sm">Order Distribution</h4>
+            <ResponsiveContainer width="100%" height={120}>
+              <PieChart>
+                <Pie
+                  data={orderStatusData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={30}
+                  outerRadius={50}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {orderStatusData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </Card>
+        </div>
+
+        {/* Orders List */}
 
       <Card className="p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
@@ -128,28 +156,7 @@ export const Slide12 = () => {
           ))}
         </div>
       </Card>
-
-      <Card className="p-6 bg-muted/50">
-        <h4 className="font-semibold text-foreground mb-3">Key Features:</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-muted-foreground">
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p>Accept or reject orders instantly</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p>Manual or automatic installer assignment</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p>Real-time order tracking</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full mt-1.5" />
-            <p>Complete order history</p>
-          </div>
-        </div>
-      </Card>
-    </div>
+      </div>
+    </AdminLayout>
   );
 };

@@ -2,14 +2,43 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "@/components/ui/avatar";
 import { MapPin, Phone, Calendar, DollarSign } from "lucide-react";
+import { AdminLayout } from "@/components/AdminLayout";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+
+const techPerformanceData = [
+  { name: "Carlos M.", jobs: 127, earnings: 45200 },
+  { name: "Juan R.", jobs: 203, earnings: 67800 },
+  { name: "Miguel S.", jobs: 89, earnings: 32100 },
+  { name: "Diego H.", jobs: 156, earnings: 54300 },
+];
 
 export const Slide13 = () => {
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-bold text-foreground mb-2">Technician Management</h3>
-        <p className="text-muted-foreground">Monitor and manage your installation team</p>
-      </div>
+    <AdminLayout title="Technician Management">
+      <div className="space-y-6">
+        {/* Performance Chart */}
+        <Card className="p-6">
+          <h4 className="font-semibold text-foreground mb-4">Technician Performance Comparison</h4>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={techPerformanceData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+              <YAxis stroke="hsl(var(--muted-foreground))" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: "hsl(var(--card))", 
+                  border: "1px solid hsl(var(--border))",
+                  borderRadius: "8px"
+                }} 
+              />
+              <Legend />
+              <Bar dataKey="jobs" fill="hsl(var(--primary))" name="Jobs Completed" />
+              <Bar dataKey="earnings" fill="hsl(var(--accent))" name="Earnings ($)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
+
+        {/* Technician Cards */}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
         {[
@@ -128,7 +157,8 @@ export const Slide13 = () => {
             </div>
           ))}
         </div>
-      </Card>
-    </div>
+        </Card>
+      </div>
+    </AdminLayout>
   );
 };
